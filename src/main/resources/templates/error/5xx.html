@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>5xx</title>
+</head>
+<body>
+<div class="ui m-container-small">
+    <div class="ui error message center aligned m-padded-tb-huge">
+        <div class="ui center aligned">
+            <div th:text="${status}"></div>
+            <a class="ui basic red button" th:href="@{/}">回到主页</a>
+            <ul>
+                <li>请求路径:<span th:text="${path}"></span></li>
+                <li>错误信息:<span th:text="${message}"></span></li>
+            </ul>
+            <h2>出错信息如下:</h2>
+            <ul>
+                <li th:each="st:${trace}">
+                    <span th:text="${st}"></span>
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+</body>
+</html>
