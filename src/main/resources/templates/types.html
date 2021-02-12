@@ -1,6 +1,6 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common::head(~{::title})">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width， initial-scale-1.0">
     <title>分类</title>
@@ -10,7 +10,7 @@
 </head>
 <body>
 <!--导航-->
-<nav class="ui inverted attached segment m-padded-tb-mini m-shadow-small">
+<nav th:replace="common::menu(2)" class="ui inverted attached segment m-padded-tb-mini m-shadow-small">
     <div class="ui container">
         <div class="ui inverted stackable secondary menu">
             <h2 class="ui teal header item">猪猪博客</h2>
@@ -284,7 +284,7 @@
     <br>
 </div>
 <!--底部footer-->
-<footer>
+<footer th:replace="common::footer">
     <div class="ui inverted center aligned vertical segment m-padded-tb-massive">
         <div class="ui center aligned container">
             <div class="ui inverted teal divided stackable grid">
@@ -322,10 +322,12 @@
     </div>
 </footer>
 
+<!--/*/<th:block th:replace="common::script">/*/-->
 <!--引入jquery-->
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
 <!--引入semantic-->
-    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+<!--/*/</th:block>/*/-->
 <script>
     $('.menu.toggle').click(function (){
         $('.m-item').toggleClass('m-mobile-hide');

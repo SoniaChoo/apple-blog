@@ -3,7 +3,7 @@
  * @description: some desc
  * @date 2021/2/10 21:22
  */
-package com.apple.blog;
+package com.apple.blog.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;
