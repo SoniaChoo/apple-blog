@@ -3,7 +3,7 @@
  * @description:test
  * @date 2021/2/10 17:52
  */
-package com.apple.blog.blogController;
+package com.apple.blog.controller;
 
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
