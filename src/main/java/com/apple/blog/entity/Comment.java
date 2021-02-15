@@ -22,4 +22,5 @@ public class Comment {
     private String email;
     private Date createTime;
     private String uid;
+    private String parentCommentId;
 }

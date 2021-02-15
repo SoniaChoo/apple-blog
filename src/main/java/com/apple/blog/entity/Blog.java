@@ -20,7 +20,7 @@ public class Blog {
     private String content;
     private String firstPicture;
     private String flag;
-    private String views;
+    private Integer views;
     private Boolean appreciation;
     private Boolean commentabled;
     private Boolean recommend;
