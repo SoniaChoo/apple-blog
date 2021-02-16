@@ -3,7 +3,7 @@
  * @description: 处理整个web的异常
  * @date 2021/2/10 16:54
  */
-package com.apple.blog.exception;
+package com.apple.blog.handler;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.AnnotationUtils;

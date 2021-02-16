@@ -5,6 +5,7 @@
  */
 package com.apple.blog.entity;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,10 +15,11 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@TableName("t_user")
 public class User {
     private Long oid;
     private String nickname;
-    private String userName;
+    private String username;
     private String password;
     private String email;
     private String avatar;
