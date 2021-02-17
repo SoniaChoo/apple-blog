@@ -17,7 +17,7 @@ import java.util.Date;
 @Data
 @TableName("t_type")
 public class Type {
-    private Long oid;
+    private Long id;
     private String name;
     private String uid;
     private Date createTime;

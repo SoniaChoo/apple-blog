@@ -3,7 +3,7 @@
  * @description: 登录业务逻辑
  * @date 2021/2/16 10:22
  */
-package com.apple.blog.service.admin;
+package com.apple.blog.service;
 
 import com.apple.blog.entity.User;
 import com.apple.blog.mapper.UserMapper;
@@ -16,7 +16,7 @@ import java.util.List;
 
 
 @Service
-public class LoginServiceImpl implements LoginService{
+public class UserServiceImpl implements UserService {
     @Autowired
     private UserMapper userMapper;
 

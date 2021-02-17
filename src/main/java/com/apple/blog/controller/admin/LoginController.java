@@ -7,7 +7,7 @@ package com.apple.blog.controller.admin;
 
 import com.apple.blog.entity.User;
 import com.apple.blog.exception.UserTooManyException;
-import com.apple.blog.service.admin.LoginService;
+import com.apple.blog.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,7 +23,7 @@ import java.util.List;
 @RequestMapping("/admin")
 public class LoginController {
     @Autowired
-    private LoginService loginService;
+    private UserService userService;
 
     @GetMapping
     public String loginPage() {
@@ -32,7 +32,7 @@ public class LoginController {
 
     @PostMapping("/login")
     public String login(@RequestParam String username, @RequestParam String password, HttpSession session, RedirectAttributes redirectAttributes) {
-        List<User> users = loginService.checkLogin(username, password);
+        List<User> users = userService.checkLogin(username, password);
         if (users.size() == 0) {
             redirectAttributes.addFlashAttribute("message","用户名或者账号错误");
             return "redirect:/admin";
