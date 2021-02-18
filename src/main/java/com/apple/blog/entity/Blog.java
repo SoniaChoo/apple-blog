@@ -5,6 +5,8 @@
  */
 package com.apple.blog.entity;
 
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -14,8 +16,9 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
+@TableName("t_blog")
 public class Blog {
-    private Long oid;
+    private Long id;
     private String title;
     private String content;
     private String firstPicture;
@@ -28,5 +31,7 @@ public class Blog {
     private Boolean published;
     private Date createTime;
     private Date updateTime;
-    private String uid;
+    private Long typeId;
+    private String tagsId;
+    private Long userId;
 }

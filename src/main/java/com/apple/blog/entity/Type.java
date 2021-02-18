@@ -19,7 +19,6 @@ import java.util.Date;
 public class Type {
     private Long id;
     private String name;
-    private String uid;
     private Date createTime;
     private Date updateTime;
 }

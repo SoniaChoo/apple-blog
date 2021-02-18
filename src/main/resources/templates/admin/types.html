@@ -65,7 +65,7 @@
                 <td th:text="${stat.count}">1</td>
                 <td th:text="${types.name}">用户故事</td>
                 <td>
-                    <a th:href="@{/admin/{id}/toEditPage(id=${types.id})}" class="ui basic mini  teal button">修改</a>
+                    <a th:href="@{/admin/{id}/toEditTypePage(id=${types.id})}" class="ui basic mini  teal button">修改</a>
                     <a th:href="@{/admin/deleteType(id=${types.id})}" onclick="return confirm('您确定要删除吗？')" class="ui basic mini  red button">删除</a>
                 </td>
             </tr>
@@ -73,11 +73,11 @@
             <tfoot>
             <tr>
                 <th colspan="3">
-                    <div class=" ui pagination mini menu" th:if="${page.total/page.size > 1}">
+                    <div class=" ui pagination mini menu" th:if="${page.total/page.size}>1">
                         <a href="#" th:href="@{/admin/types(pn=${page.current}-1)}" class=" item">上一页</a>
                         <a href="#" th:href="@{/admin/types(pn=${page.current}+1)}" class="item">下一页</a>
                     </div>
-                    <a th:href="@{/admin/toAddPage}" class="ui teal basic right floated  mini button">新增</a>
+                    <a th:href="@{/admin/toAddTypePage}" class="ui teal basic right floated  mini button">新增</a>
                 </th>
             </tr>
             </tfoot>

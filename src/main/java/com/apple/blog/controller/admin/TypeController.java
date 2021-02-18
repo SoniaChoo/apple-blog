@@ -40,14 +40,14 @@ public class TypeController {
 
 
     // 跳转新增分类页面
-    @GetMapping("/toAddPage")
-    public String toAddPage(){
+    @GetMapping("/toAddTypePage")
+    public String toAddTypePage(){
         return "admin/types-input";
     }
 
     // 跳转修改分类页面，查出当前分类，在页面回显
-    @GetMapping("/{id}/toEditPage")
-    public String toEditPage(@PathVariable("id") Long id, Model model){
+    @GetMapping("/{id}/toEditTypePage")
+    public String toEditTypePage(@PathVariable("id") Long id, Model model){
         model.addAttribute("type",typeService.getById(id));
         // "admin/types-input" 是一个修改添加二合一的页面
         return "admin/types-input";
@@ -57,7 +57,6 @@ public class TypeController {
     @PostMapping("/saveOrUpdateType")
     @Transactional
     public String saveType(Type type, RedirectAttributes redirectAttributes){
-        type.setUid(UUID.randomUUID().toString());
         if (checkTypes(type)) {
             typeService.save(type);
             redirectAttributes.addFlashAttribute("msg","操作成功");
