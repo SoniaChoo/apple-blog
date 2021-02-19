@@ -47,10 +47,17 @@
     <div class="ui container">
         <form id="blog-form" method="post" name="博客列表" action="#" th:action="@{/admin/saveOrUpdateBlog}" class="ui form">
             <input type="hidden" name="published">
+            <input type="hidden" name="id" th:value="${blog.id}">
+            <!--            需要区分是修改还是新增-->
+            <!--            分类修改使用put页面-->
+            <!--            1. SpringMVC中配置HiddenHttpMethodFilter，springboot2.x需要在配置文件中开启-->
+            <!--            2.页面创建一个form表单-->
+            <!--            3.创建一个input项，name="_method"，值就是指定的请求方式-->
+            <input type="hidden" name="_method" value="put">
             <div class="required field">
                 <div class="ui labeled input">
                     <div class="ui selection compact teal basic dropdown label">
-                        <input type="hidden" value="原创" name="flag">
+                        <input type="hidden" value="原创" name="flag" th:value="${blog.flag}">
                         <i class="dropdown icon"></i>
                         <div class="default text">原创</div>
                         <div class="ui menu">
@@ -59,14 +66,46 @@
                             <div class="item" data-value="翻译">翻译</div>
                         </div>
                     </div>
-                    <input type="text"  name="title" placeholder="标题">
+                    <input type="text"  name="title" placeholder="标题" th:value="${blog.title}">
                 </div>
             </div>
             <!--博客内容-->
             <div class="required field">
 <!--                <textarea placeholder="博客内容" name="content"></textarea>-->
                 <div id="md-content" style="z-index: 1">
-                <textarea placeholder="博客内容" name="content" style="display:none;"></textarea>
+                <textarea placeholder="博客内容" name="content" style="display:none;" th:text="${blog.content}">[TOC]
+
+#### Disabled options
+
+- TeX (Based on KaTeX);
+- Emoji;
+- Task lists;
+- HTML tags decode;
+- Flowchart and Sequence Diagram;
+
+#### Editor.md directory
+
+    editor.md/
+            lib/
+            css/
+            scss/
+            tests/
+            fonts/
+            images/
+            plugins/
+            examples/
+            languages/
+            editormd.js
+            ...
+
+```html
+&lt;!-- English --&gt;
+&lt;script src="../dist/js/languages/en.js"&gt;&lt;/script&gt;
+
+&lt;!-- 繁體中文 --&gt;
+&lt;script src="../dist/js/languages/zh-tw.js"&gt;&lt;/script&gt;
+```
+</textarea>
                 </div>
             </div>
             <div class="two fields">
@@ -74,7 +113,7 @@
                     <div class="ui labeled action input">
                         <label class="ui basic teal label">分类</label>
                         <div class="ui selection dropdown fluid">
-                            <input type="hidden" name="typeId">
+                            <input type="hidden" name="typeId" th:value="${blog.typeId}">
                             <i class="dropdown icon"></i>
                             <div class="default text">开发者手册</div>
                             <div class="ui menu">
@@ -87,7 +126,7 @@
                     <div class="ui labeled action  input">
                         <label class="ui teal compact basic label">标签</label>
                             <div class="ui fluid multiple search dropdown selection">
-                                <input type="hidden" name="tagsId">
+                                <input type="hidden" name="tagsId" >
                                 <i class="dropdown icon"></i>
                                 <div class="default text">Java</div>
                                 <div class="ui menu">
@@ -103,31 +142,31 @@
             <div class="required field">
                 <div class="ui labeled input">
                     <label class="ui basic teal label">首图</label>
-                    <input type="text" name="firstPicture" placeholder="首图引用地址">
+                    <input type="text" name="firstPicture" placeholder="首图引用地址" th:value="${blog.firstPicture}">
                 </div>
             </div>
             <div class="inline fields">
                 <div class="field">
                     <div class="ui checkbox">
-                        <input type="checkbox" id="commentabled" name="commentabled"  class="hidden">
+                        <input type="checkbox" id="commentabled" name="commentabled" checked class="hidden" th:checked="${blog.commentabled}">
                         <label for="commentabled">评论</label>
                     </div>
                 </div>
                 <div class="field">
                     <div class="ui checkbox">
-                        <input type="checkbox" id="appreciation" name="pay">
+                        <input type="checkbox" id="appreciation" name="pay" th:checked="${blog.appreciation}">
                         <label for="appreciation">赞赏</label>
                     </div>
                 </div>
                 <div class="field">
                     <div class="ui checkbox">
-                        <input type="checkbox" id="recommend" name="recommend">
+                        <input type="checkbox" id="recommend" name="recommend" th:checked="${blog.recommend}">
                         <label for="recommend">推荐</label>
                     </div>
                 </div>
                 <div class="field">
                     <div class="ui checkbox">
-                        <input type="checkbox" id="shareStatement" name="shareStatement">
+                        <input type="checkbox" id="shareStatement" name="shareStatement" th:checked="${blog.shareStatement}">
                         <label for="shareStatement">转载声明</label>
                     </div>
                 </div>

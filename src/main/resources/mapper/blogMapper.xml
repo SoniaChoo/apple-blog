@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<!--按照结果嵌套查询-->
+<mapper namespace="com.apple.blog.entity.Blog">
+<!--    <select id="findBlogPage" resultType="java.util.Map">-->
+<!--        select b.*, bt.type_id from t_blog b left join t_blog_type bt ${ew.customSqlSegment}-->
+<!--&#45;&#45;         select b.* t.* from t_blog_type bt left join t_blog b on bt.blog_id = b.id left join t_type t on bt.type_id = t.id where t.id = {} and b.title like '' and b.recommend like-->
+<!--    </select>-->
+
+<!--    <select id="getBlogAndType" parameterType="java.lang.Integer" resultMap="getRoles" >-->
+<!--    select *-->
+<!--    from t_user tu,t_user_role tur,t_role tr-->
+<!--    where-->
+<!--    tu.id = tur.user_id-->
+<!--    and-->
+<!--    tur.role_id = tr.id-->
+<!--    and tu.id = #{id,jdbcType=INTEGER}-->
+<!--  </select>-->
+</mapper>

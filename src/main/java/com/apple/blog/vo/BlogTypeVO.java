@@ -17,9 +17,18 @@ import java.util.Date;
 @NoArgsConstructor
 @Data
 public class BlogTypeVO {
-    private Long blogId;
-    private String blogTitle;
-    private Boolean blogRecommend;
-    private Date blogUpdateTime;
+    private Long id;
+    private String title;
+    private Boolean recommend;
+    private Date updateTime;
     private String typeName;
+    private Boolean published;
+    private String flag;
+    private String content;
+    private Long typeId;
+    private String tagsId;
+    private String firstPicture;
+    private Boolean appreciation;
+    private Boolean commentabled;
+    private Boolean shareStatement;
 }
