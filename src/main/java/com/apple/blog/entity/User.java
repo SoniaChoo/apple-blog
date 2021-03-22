@@ -17,7 +17,7 @@ import java.util.Date;
 @Data
 @TableName("t_user")
 public class User {
-    private Long oid;
+    private Long id;
     private String nickname;
     private String username;
     private String password;
@@ -26,5 +26,4 @@ public class User {
     private Integer type;
     private Date createTime;
     private Date updateTime;
-    private String uid;
 }

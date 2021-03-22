@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width， initial-scale-1.0">
     <title>博客</title>
-<!--    引入css-->
+    <!--    引入css-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
     <link rel="stylesheet" href="../../static/css/me.css">
 </head>
@@ -17,10 +17,11 @@
             <a href="#" target="_blank" class="m-item item m-mobile-hide"><i class=" home icon"></i>首页</a>
             <a href="#" target="_blank" class="m-item item  m-mobile-hide"><i class=" idea icon"></i>分类</a>
             <a href="#" target="_blank" class="m-item item m-mobile-hide"><i class=" tags icon"></i>标签</a>
-<!--            right menu 这里加上ui就效果不行-->
+            <!--            right menu 这里加上ui就效果不行-->
             <div class="right menu m-item m-mobile-hide">
                 <div class="ui dropdown item">
-                    <div class="text"><img class="ui avatar image" src="https://picsum.photos/100/100/?blur=2"> ZhuZhu </div>
+                    <div class="text"><img class="ui avatar image" src="https://picsum.photos/100/100/?blur=2"> ZhuZhu
+                    </div>
                     <i class="dropdown icon"></i>
                     <div class="menu">
                         <a href="#" target="_blank" class="item">注销</a>
@@ -43,7 +44,7 @@
 <!--中间内容-->
 <div class="m-container-small m-padded-tb-big">
     <div class="ui container">
-<!--        博客发布成功提示框-->
+        <!--        博客发布成功提示框-->
         <div class="ui success message">
             <i class="close icon"></i>
             <div class="header">提示：</div>
@@ -59,11 +60,13 @@
                 <div class="field">
                     <div class="ui labeled action input">
                         <div class="ui type selection multiple search dropdown">
-                            <input name="typeId" type="hideen" >
+                            <input name="typeId" type="hideen">
                             <i class="dropdown icon"></i>
                             <div class="default text">分类</div>
                             <div class="menu">
-                                <div th:each="types:${typeList}" class="item" data-value="1" th:data-value="${types.id}" th:text="${types.name}">错误处理</div>
+                                <div th:each="types:${typeList}" class="item" data-value="1" th:data-value="${types.id}"
+                                     th:text="${types.name}">错误处理
+                                </div>
                                 <!--                            相当于在thymeleaf中拿掉-->
                                 <!--/*<div class="item" data-value="2">开发者手册</div>*/-->
                             </div>
@@ -78,7 +81,8 @@
                     </div>
                 </div>
                 <div class="field">
-                    <button id="search-btn" type="button" class="ui teal mini basic button"><i class="search icon"></i>搜索</button>
+                    <button id="search-btn" type="button" class="ui teal mini basic button"><i class="search icon"></i>搜索
+                    </button>
                 </div>
             </div>
         </div>
@@ -104,7 +108,8 @@
                     <td th:text="${blog.published}?'发布':'草稿'">发布</td>
                     <td th:text="${#dates.format(blog.updateTime,'yyyy-MM-dd')}">2021-01-5 08:00:00</td>
                     <td>
-                        <a th:href="@{/admin/{id}/toEditBlogPage(id=${blog.id})}" class="ui basic mini  teal button">修改</a>
+                        <a th:href="@{/admin/{id}/toEditBlogPage(id=${blog.id})}"
+                           class="ui basic mini  teal button">修改</a>
                         <a th:href="@{/admin/deleteBlog(id=${blog.id})}" class="ui basic mini  red button">删除</a>
                     </td>
                 </tr>
@@ -113,8 +118,12 @@
                 <tr>
                     <th colspan="7">
                         <div class=" ui pagination mini menu" th:if="${page.total}>${page.size}">
-                            <button onclick="page(this)"  th:attr="data-page=${page.current}-1" th:if="${page.current}>0" class=" item" >上一页</button>
-                            <button  onclick="page(this)" th:attr="data-page=${page.current}+1" th:if="${page.current} < ${maxPage}" class="item">下一页</button>
+                            <button onclick="page(this)" th:attr="data-page=${page.current}-1" th:if="${page.current}>0"
+                                    class=" item">上一页
+                            </button>
+                            <button onclick="page(this)" th:attr="data-page=${page.current}+1"
+                                    th:if="${page.current} < ${maxPage}" class="item">下一页
+                            </button>
                         </div>
                         <a th:href="@{/admin/toAddBlogPage}" class="ui teal basic right floated  mini button">新增</a>
                     </th>
@@ -164,17 +173,17 @@
 </footer>
 
 <!--/*/<th:block th:replace="admin/common::script">/*/-->
-    <!--引入jquery-->
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
-    <!--引入semantic-->
-    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+<!--引入jquery-->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
+<!--引入semantic-->
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
 <!--/*/</th:block>/*/-->
 <script>
-    $('.menu.toggle').click(function (){
+    $('.menu.toggle').click(function () {
         $('.m-item').toggleClass('m-mobile-hide');
     });
     $('.ui.dropdown').dropdown({
-        on:'hover'
+        on: 'hover'
     });
 
     function page(obj) {
@@ -188,19 +197,20 @@
     });
 
     function loaddata() {
-        $("#table-container").load(/*[[@{/admin/blogs/search}]]*/"/admin/blogs/search",{
-            title : $("[name='title']").val(),
-            typeId : $("[name='typeId']").val(),
+        $("#table-container").load(/*[[@{/admin/blogs/search}]]*/"/admin/blogs/search", {
+            title: $("[name='title']").val(),
+            typeId: $("[name='typeId']").val(),
             recommend: $("[name='recommend']").prop('checked'),
-            page : $("[name='page']").val()
+            page: $("[name='page']").val()
         });
     }
-    $('.message .close').on('click',function (){
+
+    $('.message .close').on('click', function () {
         $(this).closest('.message').transition('fade');
     });
 
     $('#clear-btn')
-        .on('click', function() {
+        .on('click', function () {
             $('.ui.type.dropdown')
                 .dropdown('clear')
             ;

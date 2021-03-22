@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width， initial-scale-1.0">
     <title>博客发布</title>
-<!--    引入css-->
+    <!--    引入css-->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.css">
     <link rel="stylesheet" href="../../static/css/me.css">
-<!--    md插件-->
+    <!--    md插件-->
     <link rel="stylesheet" href="../../static/lib/editormd/css/editormd.min.css"/>
 </head>
 <body>
@@ -19,10 +19,11 @@
             <a href="#" target="_blank" class="m-item item m-mobile-hide"><i class=" home icon"></i>首页</a>
             <a href="#" target="_blank" class="m-item item active m-mobile-hide"><i class=" idea icon"></i>分类</a>
             <a href="#" target="_blank" class="m-item item m-mobile-hide"><i class=" tags icon"></i>标签</a>
-<!--            right menu 这里加上ui就效果不行-->
+            <!--            right menu 这里加上ui就效果不行-->
             <div class="right menu m-item m-mobile-hide">
                 <div class="ui dropdown item">
-                    <div class="text"><img class="ui avatar image" src="https://picsum.photos/100/100/?blur=2"> ZhuZhu </div>
+                    <div class="text"><img class="ui avatar image" src="https://picsum.photos/100/100/?blur=2"> ZhuZhu
+                    </div>
                     <i class="dropdown icon"></i>
                     <div class="menu">
                         <a href="#" target="_blank" class="item">注销</a>
@@ -45,7 +46,8 @@
 <!--中间内容-->
 <div class="m-container m-padded-tb-big">
     <div class="ui container">
-        <form id="blog-form" method="post" name="博客列表" action="#" th:action="@{/admin/saveOrUpdateBlog}" class="ui form">
+        <form id="blog-form" method="post" name="博客列表" action="#" th:action="@{/admin/saveOrUpdateBlog}"
+              class="ui form">
             <input type="hidden" name="published">
             <input type="hidden" name="id" th:value="${blog.id}">
             <!--            需要区分是修改还是新增-->
@@ -66,12 +68,12 @@
                             <div class="item" data-value="翻译">翻译</div>
                         </div>
                     </div>
-                    <input type="text"  name="title" placeholder="标题" th:value="${blog.title}">
+                    <input type="text" name="title" placeholder="标题" th:value="${blog.title}">
                 </div>
             </div>
             <!--博客内容-->
             <div class="required field">
-<!--                <textarea placeholder="博客内容" name="content"></textarea>-->
+                <!--                <textarea placeholder="博客内容" name="content"></textarea>-->
                 <div id="md-content" style="z-index: 1">
                 <textarea placeholder="博客内容" name="content" style="display:none;" th:text="${blog.content}">[TOC]
 
@@ -117,7 +119,9 @@
                             <i class="dropdown icon"></i>
                             <div class="default text">开发者手册</div>
                             <div class="ui menu">
-                                <div th:each="type:${typeList}" class="item" data-value="开发者手册" th:data-value="${type.id}" th:text="${type.name}">开发者手册</div>
+                                <div th:each="type:${typeList}" class="item" data-value="开发者手册"
+                                     th:data-value="${type.id}" th:text="${type.name}">开发者手册
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -125,20 +129,20 @@
                 <div class="field">
                     <div class="ui labeled action  input">
                         <label class="ui teal compact basic label">标签</label>
-                            <div class="ui fluid multiple search dropdown selection">
-                                <input type="hidden" name="tagsId" >
-                                <i class="dropdown icon"></i>
-                                <div class="default text">Java</div>
-                                <div class="ui menu">
-                                    <div class="item" data-value="0">Java</div>
-                                    <div class="item" data-value="1">Mysql</div>
-                                    <div class="item" data-value="2">Html</div>
+                        <div class="ui fluid multiple search dropdown selection">
+                            <input type="hidden" name="tagsId" th:value="${blog.tagsId}">
+                            <i class="dropdown icon"></i>
+                            <div class="default text">Java</div>
+                            <div class="ui menu">
+                                <div th:each="tag:${tagList}" class="item" data-value="tony" th:data-value="${tag.id}"
+                                     th:text="${tag.name}">tony
                                 </div>
                             </div>
+                        </div>
                     </div>
                 </div>
             </div>
-<!--            首图地址-->
+            <!--            首图地址-->
             <div class="required field">
                 <div class="ui labeled input">
                     <label class="ui basic teal label">首图</label>
@@ -148,7 +152,8 @@
             <div class="inline fields">
                 <div class="field">
                     <div class="ui checkbox">
-                        <input type="checkbox" id="commentabled" name="commentabled" checked class="hidden" th:checked="${blog.commentabled}">
+                        <input type="checkbox" id="commentabled" name="commentabled" checked class="hidden"
+                               th:checked="${blog.commentabled}">
                         <label for="commentabled">评论</label>
                     </div>
                 </div>
@@ -166,12 +171,13 @@
                 </div>
                 <div class="field">
                     <div class="ui checkbox">
-                        <input type="checkbox" id="shareStatement" name="shareStatement" th:checked="${blog.shareStatement}">
+                        <input type="checkbox" id="shareStatement" name="shareStatement"
+                               th:checked="${blog.shareStatement}">
                         <label for="shareStatement">转载声明</label>
                     </div>
                 </div>
             </div>
-<!--            表单验证提示语-->
+            <!--            表单验证提示语-->
             <div class="ui error message">
 
             </div>
@@ -223,37 +229,37 @@
 </footer>
 
 <!--/*/<th:block th:replace="admin/common::script">/*/-->
-    <!--引入jquery-->
-    <script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
-    <!--引入semantic-->
-    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
-    <!--引入md插件-->
-    <script src="../../static/lib/editormd/editormd.min.js"></script>
+<!--引入jquery-->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.2.1/dist/jquery.min.js"></script>
+<!--引入semantic-->
+<script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.4.2/dist/semantic.min.js"></script>
+<!--引入md插件-->
+<script src="../../static/lib/editormd/editormd.min.js"></script>
 <!--/*/</th:block>/*/-->
 <script>
-    $('.menu.toggle').click(function (){
+    $('.menu.toggle').click(function () {
         $('.m-item').toggleClass('m-mobile-hide');
     });
     $('.ui.dropdown').dropdown({
-        on:'hover'
+        on: 'hover'
     });
     $('.ui.form').form({
-        fields:{
-            title:{
-                identifier:'title',
-                rules:[
+        fields: {
+            title: {
+                identifier: 'title',
+                rules: [
                     {
-                        type:'empty',
-                        prompt:"请输入标题"
+                        type: 'empty',
+                        prompt: "请输入标题"
                     }
                 ]
             },
-            content:{
-                identifier:'content',
-                rules:[
+            content: {
+                identifier: 'content',
+                rules: [
                     {
-                        type:'empty',
-                        prompt:"请输入博客内容"
+                        type: 'empty',
+                        prompt: "请输入博客内容"
                     }
                 ]
             },
@@ -266,12 +272,12 @@
                     }
                 ]
             },
-            firstPicture:{
-                identifier:'firstPicture',
-                rules:[
+            firstPicture: {
+                identifier: 'firstPicture',
+                rules: [
                     {
-                        type:'empty',
-                        prompt:"请输入首图"
+                        type: 'empty',
+                        prompt: "请输入首图"
                     }
                 ]
             }
@@ -279,14 +285,15 @@
     });
     var contentEditor;
 
-    $(function() {
+    $(function () {
         contentEditor = editormd("md-content", {
-            width   : "100%",
-            height  : 640,
-            syncScrolling : "single",
+            width: "100%",
+            height: 640,
+            syncScrolling: "single",
             // path    : "../../static/lib/editormd/lib/" thymeleaf模板中用这个相对路径加载不出来
-            path    : "/lib/editormd/lib/"
-        })});
+            path: "/lib/editormd/lib/"
+        })
+    });
     $("#save-btn").click(function () {
         $("[name='published']").val(false);
         $("#blog-form").submit();
