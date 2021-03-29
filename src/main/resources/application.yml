@@ -4,8 +4,10 @@ spring:
     username: root
     password: qq@982709437
     url: jdbc:mysql://localhost:3306/blog?useUnicode=true&useSSL=true&characterEncoding=utf8
-# 修改数据时更改请求为put
+  # 修改数据时更改请求为put
   mvc:
     hiddenmethod:
       filter:
         enabled: true
+mybatis-plus:
+  mapper-locations: classpath:/mapper/**.xml

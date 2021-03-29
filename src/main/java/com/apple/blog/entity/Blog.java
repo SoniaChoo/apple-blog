@@ -28,6 +28,7 @@ public class Blog {
     private Boolean commentabled;
     private Boolean recommend;
     private Boolean shareStatement;
+    private String description;
     private Boolean published;
     private Date createTime;
     private Date updateTime;
