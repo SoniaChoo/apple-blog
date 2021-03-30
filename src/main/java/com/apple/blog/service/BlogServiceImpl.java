@@ -14,6 +14,7 @@ import com.apple.blog.mapper.TagMapper;
 import com.apple.blog.mapper.TypeMapper;
 import com.apple.blog.vo.BlogQuery;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,6 +35,8 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, Blog> implements Bl
     private TypeMapper typeMapper;
     @Autowired
     private TagMapper tagMapper;
+    @Autowired
+    private BlogService blogService;
 
     @Override
     public List<Blog> getBlogByBlogQuery(BlogQuery blogQuery) {
@@ -78,5 +81,22 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, Blog> implements Bl
             blogTagMap.put(TAG_NAME, currentTag.getName());
         }
         return blogCountByTagList;
+    }
+
+    @Override
+    public List<Blog> getBlogByRecommend(Integer limit) {
+        return blogMapper.getBlogByRecommend(limit);
+    }
+
+    @Override
+    public List<Blog> getBlogListByTop(Integer limit) {
+        return null;
+    }
+
+    @Override
+    public List<Blog> getBlogByPage(Page page) {
+        Page blogPage = blogService.page(page);
+        List<Blog> blogList = blogPage.getRecords();
+        return null;
     }
 }

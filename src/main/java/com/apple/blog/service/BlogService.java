@@ -7,6 +7,7 @@ package com.apple.blog.service;
 
 import com.apple.blog.entity.Blog;
 import com.apple.blog.vo.BlogQuery;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.IService;
 
 import java.util.List;
@@ -18,4 +19,10 @@ public interface BlogService extends IService<Blog> {
     List<Map<String, Object>> getBlogCountByType(Integer limit);
 
     List<Map<String, Object>> getBlogCountByTag(Integer limit);
+
+    List<Blog> getBlogByRecommend(Integer limit);
+
+    List<Blog> getBlogListByTop(Integer limit);
+
+    List<Blog> getBlogByPage(Page page);
 }

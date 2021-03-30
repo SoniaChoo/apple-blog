@@ -35,4 +35,8 @@ public class Blog {
     private Long typeId;
     private String tagsId;
     private Long userId;
+
+    // 以下字段不在数据库保存，封装只是为了方便使用
+    @TableField(exist = false)
+    private User user;
 }

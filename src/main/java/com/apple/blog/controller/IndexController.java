@@ -30,10 +30,11 @@ public class IndexController {
 
     @GetMapping("/index")
     public String index(@RequestParam(value = "page", defaultValue = "1") Integer pn, Model model) {
-        Page<Blog> page = new Page<>(pn, 5);
-        model.addAttribute("page", blogService.page(page));
+        Page<Blog> page = new Page<>(pn, LIMIT);
+        model.addAttribute("page", blogService.getBlogByPage(page));
         model.addAttribute("types", blogService.getBlogCountByType(LIMIT));
         model.addAttribute("tags", blogService.getBlogCountByTag(LIMIT));
+        model.addAttribute("recommendBlogs",blogService.getBlogByRecommend(LIMIT));
         return "index";
     }
 
