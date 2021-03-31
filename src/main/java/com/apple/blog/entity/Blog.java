@@ -12,6 +12,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.Date;
+import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -39,4 +40,10 @@ public class Blog {
     // 以下字段不在数据库保存，封装只是为了方便使用
     @TableField(exist = false)
     private User user;
+
+    @TableField(exist = false)
+    private Type type;
+
+    @TableField(exist = false)
+    private List<Tag> tagList;
 }

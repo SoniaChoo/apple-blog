@@ -14,6 +14,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Component
@@ -28,18 +29,18 @@ public class IndexController {
     @Autowired
     private TypeService typeService;
 
-    @GetMapping("/index")
+    @GetMapping("/")
     public String index(@RequestParam(value = "page", defaultValue = "1") Integer pn, Model model) {
         Page<Blog> page = new Page<>(pn, LIMIT);
         model.addAttribute("page", blogService.getBlogByPage(page));
         model.addAttribute("types", blogService.getBlogCountByType(LIMIT));
         model.addAttribute("tags", blogService.getBlogCountByTag(LIMIT));
-        model.addAttribute("recommendBlogs",blogService.getBlogByRecommend(LIMIT));
+        model.addAttribute("recommendBlogs", blogService.getBlogByRecommend(LIMIT));
         return "index";
     }
 
-    @GetMapping("/blog")
-    public String blog() {
+    @GetMapping("/blog/{id}")
+    public String blog(@PathVariable("id") Long id) {
         return "blog";
     }
 

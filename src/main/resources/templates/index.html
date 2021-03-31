@@ -42,7 +42,7 @@
                             <h3 class="ui  teal header">博客</h3>
                         </div>
                         <div class="ui right aligned column">
-                            共<h3 class="ui orange header m-inline-block m-text-thin" th:text="${page.total}">14</h3>篇
+                            共<h3 class="ui orange header m-inline-block m-text-thin" th:text="${page.getTotal()}">14</h3>篇
                         </div>
                     </div>
                 </div>
@@ -51,35 +51,36 @@
                     <div class="ui padded vertical segment m-padded-tb-large" th:each="blog:${page.getRecords()}">
                         <div class="ui mobile reversed stackable grid">
                             <div class="eleven wide column">
-                                <h3 class="ui header"><a href="#" class="m-black" th:text="${blog.title}">你真的会java嘛</a></h3>
+                                <h3 class="ui header"><a href="#" th:href="@{/blog/{id}(id=${blog.id})}" target="_blank" class="m-black" th:text="${blog.title}">你真的会java嘛</a></h3>
                                 <p class="ui m-text" th:text="|${blog.description}|......">java的内容包括数据库，spring，java有非常多的框架，需要花很多时间和精力来学习，希望大家都能学好java</p>
                                 <div class="ui grid">
                                     <div class="eleven wide column">
                                         <div class="ui mini horizontal link list">
                                             <div class="item">
-                                                <img src="https://picsum.photos/100/100/?blur=2" alt="" th:src="" class="ui avatar image">
-                                                <div class="content"><a href="#" class="header" th:text="${blog}">ZhuZhu</a></div>
+                                                <img src="https://picsum.photos/100/100/?blur=2" alt="" th:src="@{${blog.user.avatar}}" class="ui avatar image">
+                                                <div class="content"><a href="#" class="header" th:text="${blog.user.nickname}">ZhuZhu</a></div>
                                             </div>
                                             <div class="item">
-                                                <i class="calendar icon"></i>2021-02-07
+                                                <i class="calendar icon"></i><span th:text="${#dates.format(blog.updateTime,'yyyy-MM-dd')}">2021-02-07</span>
                                             </div>
-                                            <div class="item">
-                                                <i class="eye icon"></i>666
+                                            <div class="item">s
+                                                <i class="eye icon"></i><span th:text="${blog.views}">666</span>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="right aligned five wide column">
-                                        <a href="#" class="ui teal basic label icon m-padded-tiny m-text-thin">自我认知</a>
+                                        <a href="#" class="ui teal basic label icon m-padded-tiny m-text-thin" th:text="${blog.type.name}">自我认知</a>
                                     </div>
                                 </div>
                             </div>
                             <div class="five wide column">
-                                <a href="#" target="_blank">
-                                    <img src="https://picsum.photos/800/450/?blur=2" alt="" class="ui rounded image">
+                                <a href="#" th:href="@{/blog/{id}(id=${blog.id})}" target="_blank">
+                                    <img src="https://picsum.photos/800/450/?blur=2" alt="" th:src="@{${blog.firstPicture}}" class="ui rounded image">
                                 </a>
                             </div>
                         </div>
                     </div>
+<!--                    /*-->
                     <div class="ui padded vertical segment m-padded-tb-large">
                         <div class="ui mobile reversed stackable grid">
                             <div class="eleven wide column">
@@ -240,15 +241,16 @@
                             </div>
                         </div>
                     </div>
+<!--                    */-->
                 </div>
                 <!--底部bottom-->
-                <div class="ui bottom attached segment">
+                <div class="ui bottom attached segment" th:if="${page.total}>${page.size}">
                     <div class="ui two column grid">
                         <div class="ui column">
-                            <a href="#" class="ui rounded basic teal mini button">上一页</a>
+                            <a href="#" th:href="@{/(pn=${page.current}-1)}" th:if="${page.hasPrevious()}" class="ui rounded basic teal mini button">上一页</a>
                         </div>
                         <div class="ui right aligned column">
-                            <a href="#" class="ui rounded basic teal mini button">下一页</a>
+                            <a href="#" th:href="@{/(pn=${page.current}+1)}" th:if="${page.hasNext()}" class="ui rounded basic teal mini button">下一页</a>
                         </div>
                     </div>
                 </div>
@@ -269,11 +271,13 @@
                         </div>
                     </div>
                     <div class="ui teal segment">
-                        <div class="ui fluid vertical menu">
-                            <a href="#" target="_blank" class="item">学习日志
+                        <div class="ui fluid vertical menu" >
+                            <a href="#" target="_blank" class="item" th:each="type:${types}">
+                                <span th:text="${type['name']}"></span>学习日志
                             <!--item自动有一个这样的效果，文字后面的东西居右-->
-                            <div class="ui teal left pointing basic label">13</div>
+                            <div class="ui teal left pointing basic label" th:text="${type['count']}">13</div>
                             </a>
+                            <!--/*-->
                             <a href="#" target="_blank" class="item">学习日志
                                 <div class="ui teal left pointing basic label">13</div>
                             </a>
@@ -289,6 +293,7 @@
                             <a href="#" target="_blank" class="item">学习日志
                                 <div class="ui teal left pointing basic label">13</div>
                             </a>
+                            <!--*/-->
                         </div>
                     </div>
                 </div>
@@ -305,6 +310,10 @@
                         </div>
                     </div>
                     <div class="ui teal segment">
+                        <a href="#" target="_blank" class="ui teal basic left pointing label m-margin-tb-tiny" th:each="tag:${tags}">
+                            <span th:text="${tag['name']}">java</span>
+                            <div class="detail" th:text="${tag['count']}">12</div></a>
+                        <!--/*-->
                         <a href="#" target="_blank" class="ui teal basic left pointing label m-margin-tb-tiny">java<div class="detail">12</div></a>
                         <a href="#" target="_blank" class="ui teal basic left pointing label m-margin-tb-tiny">java<div class="detail">12</div></a>
                         <a href="#" target="_blank" class="ui teal basic left pointing label m-margin-tb-tiny">java<div class="detail">12</div></a>
@@ -314,7 +323,7 @@
                         <a href="#" target="_blank" class="ui teal basic left pointing label m-margin-tb-tiny">java<div class="detail">12</div></a>
                         <a href="#" target="_blank" class="ui teal basic left pointing label m-margin-tb-tiny">java<div class="detail">12</div></a>
                         <a href="#" target="_blank" class="ui teal basic left pointing label m-margin-tb-tiny">java<div class="detail">12</div></a>
-                        <a href="#" target="_blank" class="ui teal basic left pointing label m-margin-tb-tiny">java<div class="detail">12</div></a>
+                        <!--*/-->
                     </div>
                 </div>
                 <!--最新推荐-->
@@ -322,6 +331,10 @@
                     <div class="ui secondary segment ">
                         <i class="bookmark icon"></i>最新推荐
                     </div>
+                    <div class="ui segment" th:each="recommendBlog:${recommendBlogs}">
+                        <a href="#" th:href="@{/blog/{id}(id=${blog.id})}" target="_blank" class="m-black m-text-thin" th:text="${recommendBlog.title}">用户故事</a>
+                    </div>
+                    <!--/*-->
                     <div class="ui segment">
                         <a href="#" target="_blank" class="m-black m-text-thin">用户故事</a>
                     </div>
@@ -343,9 +356,7 @@
                     <div class="ui segment">
                         <a href="#" target="_blank" class="m-black m-text-thin">用户故事</a>
                     </div>
-                    <div class="ui segment">
-                        <a href="#" target="_blank" class="m-black m-text-thin">用户故事</a>
-                    </div>
+                    <!--*/-->
                 </div>
                 <!--二维码-->
 <!--                <div class="ui section divider"></div>-->

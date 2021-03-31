@@ -24,5 +24,9 @@ public interface BlogService extends IService<Blog> {
 
     List<Blog> getBlogListByTop(Integer limit);
 
-    List<Blog> getBlogByPage(Page page);
+    Page<Blog> getBlogByPage(Page page);
+
+    List<Blog> setUserByBlogList(List<Blog> blogList);
+
+    void saveTags(Blog blog);
 }

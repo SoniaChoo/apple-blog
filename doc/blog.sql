@@ -61,7 +61,7 @@ CREATE TABLE `t_blog_comment`  (
   `oid` int(11) NOT NULL AUTO_INCREMENT COMMENT '唯一oid',
   `blog_id` int(11) NOT NULL COMMENT '博客id',
   `comment_id` int(11) NOT NULL COMMENT '评论id',
-  `create_time` datetime(0) NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
+  `create_time` datetime(0)  DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '更新时间',
   `uid` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '唯一uid',
   PRIMARY KEY (`uid`, `oid`) USING BTREE,
@@ -99,7 +99,7 @@ CREATE TABLE `t_blog_user`  (
   `oid` int(11) NOT NULL AUTO_INCREMENT COMMENT '唯一oid',
   `blog_id` int(11) NOT NULL COMMENT '博客id',
   `user_id` int(11) NOT NULL COMMENT '用户id',
-  `create_time` datetime(0) NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
+  `create_time` datetime(0) DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '更新时间',
   `uid` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '唯一uid',
   PRIMARY KEY (`uid`, `oid`) USING BTREE,
@@ -193,7 +193,7 @@ CREATE TABLE `t_user`  (
   `avatar` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '头像',
   `email` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL COMMENT '邮箱',
   `type` tinyint(1) NULL DEFAULT 1 COMMENT '用户类型',
-  `create_time` datetime(0) NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
+  `create_time` datetime(0)  DEFAULT NULL COMMENT '创建时间',
   `update_time` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE,
   INDEX `oid`(`id`) USING BTREE
@@ -205,3 +205,6 @@ CREATE TABLE `t_user`  (
 INSERT INTO `t_user` VALUES (1, 'sonia', 'sonia', 'e10adc3949ba59abbe56e057f20f883e', 'https://picsum.photos/100/100/?blur=2', 'soniachoo@163.com', 1, NULL, '2021-02-16 11:34:48');
 
 SET FOREIGN_KEY_CHECKS = 1;
+
+
+STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION

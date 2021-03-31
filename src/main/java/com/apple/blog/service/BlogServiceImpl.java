@@ -6,9 +6,7 @@
 package com.apple.blog.service;
 
 import com.alibaba.druid.util.StringUtils;
-import com.apple.blog.entity.Blog;
-import com.apple.blog.entity.Tag;
-import com.apple.blog.entity.Type;
+import com.apple.blog.entity.*;
 import com.apple.blog.mapper.BlogMapper;
 import com.apple.blog.mapper.TagMapper;
 import com.apple.blog.mapper.TypeMapper;
@@ -19,8 +17,7 @@ import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class BlogServiceImpl extends ServiceImpl<BlogMapper, Blog> implements BlogService {
@@ -29,6 +26,7 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, Blog> implements Bl
     private final static String TYPE_COUNT = "count";
     private final static String TYPE_NAME = "name";
     private final static String TAG_NAME = "name";
+    private final static String FILE_SEGMENTATION = ",";
     @Autowired
     private BlogMapper blogMapper;
     @Autowired
@@ -37,6 +35,14 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, Blog> implements Bl
     private TagMapper tagMapper;
     @Autowired
     private BlogService blogService;
+    @Autowired
+    private UserService userService;
+    @Autowired
+    private TypeService typeService;
+    @Autowired
+    private TagService tagService;
+    @Autowired
+    private BlogTagService blogTagService;
 
     @Override
     public List<Blog> getBlogByBlogQuery(BlogQuery blogQuery) {
@@ -58,17 +64,17 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, Blog> implements Bl
     public List<Map<String, Object>> getBlogCountByType(Integer limit) {
         // TODO:后续可以做redis的优化
         List<Map<String, Object>> blogCountByTypeList = blogMapper.getBlogCountByType(limit);
-        for (Map<String, Object> blogTypeMap : blogCountByTypeList) {
+        blogCountByTypeList.stream().forEachOrdered(blogTypeMap -> {
             Long typeId = (Long) blogTypeMap.get(TYPE_ID);
             Type currentType = typeMapper.selectById(typeId);
             blogTypeMap.put(TYPE_NAME, currentType.getName());
-//            // java.lang.Number是Integer,Long的父类
+            // java.lang.Number是Integer,Long的父类
 //            Number num = (Number) blogTypeMap.get(TYPE_COUNT);
 //            Integer count = 0;
 //            if (num != null) {
 //                count = num.intValue();
 //            }
-        }
+        });
         return blogCountByTypeList;
     }
 
@@ -94,9 +100,59 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, Blog> implements Bl
     }
 
     @Override
-    public List<Blog> getBlogByPage(Page page) {
+    public Page<Blog> getBlogByPage(Page page) {
         Page blogPage = blogService.page(page);
         List<Blog> blogList = blogPage.getRecords();
-        return null;
+        // 对user进行赋值
+        blogList = blogService.setUserByBlogList(blogList);
+        blogPage.setRecords(blogList);
+        return blogPage;
+    }
+
+    @Override
+    public List<Blog> setUserByBlogList(List<Blog> blogList) {
+        blogList.stream().forEach(blog -> {
+            User blogUser = new User();
+            Type blogType = new Type();
+            List<Tag> tagList = new ArrayList<>();
+            if (blog.getUserId() != null) {
+                blogUser = userService.getById(blog.getUserId());
+            }
+            if (blog.getTypeId() != null) {
+                blogType = typeService.getById(blog.getTypeId());
+            }
+            if (!StringUtils.isEmpty(blog.getTagsId())) {
+                // 把字符串转换成list<Long>
+                List<Long> tagIdList = changeStringToLongList(blog.getTagsId(), FILE_SEGMENTATION);
+                tagList = tagService.listByIds(tagIdList);
+            }
+            blog.setUser(blogUser);
+            blog.setType(blogType);
+            blog.setTagList(tagList);
+        });
+        return blogList;
+    }
+
+    @Override
+    public void saveTags(Blog blog) {
+        if (!StringUtils.isEmpty(blog.getTagsId())) {
+            List<Long> tagIdList = changeStringToLongList(blog.getTagsId(), FILE_SEGMENTATION);
+            tagIdList.stream().forEach(tagId -> {
+                BlogTag blogTag = new BlogTag();
+                blogTag.setTagId(tagId);
+                blogTag.setBlogId(blog.getId());
+                blogTag.setCreateTime(new Date());
+                blogTagService.save(blogTag);
+            });
+        }
+    }
+
+    private List<Long> changeStringToLongList(String str, String code) {
+        String[] split = str.split(code);
+        ArrayList<Long> afterSplitList = new ArrayList<>();
+        Arrays.stream(split).forEach(s -> {
+            afterSplitList.add(Long.valueOf(s));
+        });
+        return afterSplitList;
     }
 }
