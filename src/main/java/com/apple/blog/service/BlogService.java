@@ -29,4 +29,6 @@ public interface BlogService extends IService<Blog> {
     List<Blog> setUserByBlogList(List<Blog> blogList);
 
     void saveTags(Blog blog);
+
+    void updateBlogTag(Blog blog);
 }

@@ -123,6 +123,11 @@ public class BlogController {
     @PutMapping("/saveOrUpdateBlog")
     @Transactional
     public String updateBlog(Blog blog, RedirectAttributes redirectAttributes) {
+        Blog oriBlog = blogService.getById(blog.getId());
+        // 如果修改了标签，就需要更新中间表
+        if (!oriBlog.getTagsId().equals(blog.getTagsId())) {
+            blogService.updateBlogTag(blog);
+        }
         blogService.updateById(blog);
         redirectAttributes.addFlashAttribute("msg", "操作成功");
         return "redirect:/admin/blogs";

@@ -147,6 +147,20 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, Blog> implements Bl
         }
     }
 
+    @Override
+    public void updateBlogTag(Blog blog) {
+        if (!StringUtils.isEmpty(blog.getTagsId())) {
+            List<Long> tagIdList = changeStringToLongList(blog.getTagsId(), FILE_SEGMENTATION);
+            tagIdList.stream().forEach(tagId -> {
+                BlogTag blogTag = new BlogTag();
+                blogTag.setTagId(tagId);
+                blogTag.setBlogId(blog.getId());
+                blogTag.setCreateTime(new Date());
+                blogTagService.updateById(blogTag);
+            });
+        }
+    }
+
     private List<Long> changeStringToLongList(String str, String code) {
         String[] split = str.split(code);
         ArrayList<Long> afterSplitList = new ArrayList<>();
