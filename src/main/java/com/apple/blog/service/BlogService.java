@@ -18,8 +18,6 @@ public interface BlogService extends IService<Blog> {
 
     List<Map<String, Object>> getBlogCountByType(Integer limit);
 
-    List<Map<String, Object>> getBlogCountByTag(Integer limit);
-
     List<Blog> getBlogByRecommend(Integer limit);
 
     List<Blog> getBlogListByTop(Integer limit);

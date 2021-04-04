@@ -79,17 +79,6 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, Blog> implements Bl
     }
 
     @Override
-    public List<Map<String, Object>> getBlogCountByTag(Integer limit) {
-        List<Map<String, Object>> blogCountByTagList = blogMapper.getBlogCountByTag(limit);
-        for (Map<String, Object> blogTagMap : blogCountByTagList) {
-            Long tagId = (Long) blogTagMap.get(TAG_ID);
-            Tag currentTag = tagMapper.selectById(tagId);
-            blogTagMap.put(TAG_NAME, currentTag.getName());
-        }
-        return blogCountByTagList;
-    }
-
-    @Override
     public List<Blog> getBlogByRecommend(Integer limit) {
         return blogMapper.getBlogByRecommend(limit);
     }

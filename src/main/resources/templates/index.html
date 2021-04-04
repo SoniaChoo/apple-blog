@@ -52,7 +52,7 @@
                         <div class="ui mobile reversed stackable grid">
                             <div class="eleven wide column">
                                 <h3 class="ui header"><a href="#" th:href="@{/blog/{id}(id=${blog.id})}" target="_blank" class="m-black" th:text="${blog.title}">你真的会java嘛</a></h3>
-                                <p class="ui m-text" th:text="|${blog.description}|......">java的内容包括数据库，spring，java有非常多的框架，需要花很多时间和精力来学习，希望大家都能学好java</p>
+                                <p class="ui m-text" th:text="${blog.description}">java的内容包括数据库，spring，java有非常多的框架，需要花很多时间和精力来学习，希望大家都能学好java</p>
                                 <div class="ui grid">
                                     <div class="eleven wide column">
                                         <div class="ui mini horizontal link list">
