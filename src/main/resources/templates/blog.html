@@ -40,30 +40,30 @@
         <div class="ui top attached segment">
             <div class="ui horizontal link list">
                 <div class="item">
-                    <img src="https://picsum.photos/100/100/?blur=2" alt="" class="ui avatar image">
-                    <div class="content"><a href="#" target="_blank" class="header">ZhuZhu</a></div>
+                    <img src="https://picsum.photos/100/100/?blur=2" alt="" th:src="@{${blog.user.avatar}" class="ui avatar image">
+                    <div class="content"><a href="#" target="_blank" class="header" th:text="${blog.user.nickname}">ZhuZhu</a></div>
                 </div>
                 <div class="item">
-                    <i class="calendar icon"></i>2021-02-04
+                    <i class="calendar icon"></i><span th:text="${#dates.format(blog.updateTime,'yyyy-MM-dd')}">2021-02-04</span>
                 </div>
                 <div class="item">
-                    <i class="eye icon"></i>453次
+                    <i class="eye icon"></i><span th:text="${blog.views}">453次</span>
                 </div>
             </div>
         </div>
 <!--        图片区域-->
         <div class="ui attached segment animate__fadeIn">
-            <img src="https://picsum.photos/800/450/?blur=2" alt="" class="ui fluid rounded image">
+            <img src="https://picsum.photos/800/450/?blur=2" alt="" th:src="@{${blog.firstPicture}" class="ui fluid rounded image">
         </div>
 <!--        内容-->
         <div class="ui attached padded segment">
 <!--            待删：basic、vertical、fluid都可以撑开，basic其实是把边线去掉，前两个是segment，后者是图片或者menu等-->
             <div class="ui right aligned basic segment">
-                <div class="ui label basic orange">原创</div>
+                <div class="ui label basic orange" th:text="${blog.flag}">原创</div>
             </div>
-            <h2 class=" ui center aligned header ">关于刻意练习的清单</h2>
+            <h2 class=" ui center aligned header " th:text="${blog.title}">关于刻意练习的清单</h2>
             <br>
-            <div id="content" class="m-padded-lr-responsive  js-toc-content m-padded-tb-large typo typo-selection">
+            <div id="content" th:text="${blog.content}" class="m-padded-lr-responsive  js-toc-content m-padded-tb-large typo typo-selection">
 <!--                <h2 id="tagline" class="serif">一致化浏览器排版效果，构建最适合中文阅读的网页排版</h2>-->
                 <pre class="line-numbers"><code class="language-javascript">function add(a, b){
 	return a + b;
@@ -442,7 +442,7 @@ h5,h6{font-size:1em;}
             </div>
 <!--            标签-->
             <div class="m-padded-lr-responsive ">
-                <div class="ui label teal left pointing basic">html</div>
+                <div class="ui label teal left pointing basic" th:text="${blog.tagsId}">html</div>
             </div>
 <!--            赞赏-->
             <div id="payButton" class="ui basic center aligned segment">
@@ -469,8 +469,8 @@ h5,h6{font-size:1em;}
             <div class="ui middle aligned grid padded">
                 <div class="ui eleven wide column">
                     <ui class="list">
-                        <li>作者：朱爽君</li>
-                        <li>发表时间:2021-02-07 23:38:00</li>
+                        <li>作者：<span th:text="${blog.user.nickname}">朱爽君</span></li>
+                        <li>发表时间:<span th:text="${#dates.format(blog.updateTime,'yyyy-MM-dd')}">2021-02-07 23:38:00</span></li>
                         <li>版权声明</li>
                         <li>公众号转载</li>
                     </ui>

@@ -6,6 +6,7 @@
 package com.apple.blog.controller;
 
 import com.apple.blog.entity.Blog;
+import com.apple.blog.exception.NotfoundException;
 import com.apple.blog.service.BlogService;
 import com.apple.blog.service.BlogTagService;
 import com.apple.blog.service.TypeService;
@@ -18,6 +19,9 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import java.util.Collections;
+import java.util.List;
 
 @Component
 @Controller
@@ -52,8 +56,13 @@ public class IndexController {
 
     @GetMapping("/blog/{id}")
     public String blog(@PathVariable("id") Long id, Model model) {
-        model.addAttribute("page", blogService.getById(id));
-        return null;
+        Blog blog = blogService.getById(id);
+        if (blog == null) {
+            throw new NotfoundException("无该博客");
+        }
+        List<Blog> blogList = blogService.setUserAndTagAndTypeWithBlog(Collections.singletonList(blog));
+        model.addAttribute("blog", blogList.get(0));
+        return "blog";
     }
 
     @GetMapping("/about")
