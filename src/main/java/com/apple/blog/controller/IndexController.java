@@ -16,6 +16,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Component
@@ -33,7 +34,7 @@ public class IndexController {
     private BlogTagService blogTagService;
 
     @GetMapping("/")
-    public String index(@RequestParam(value = "page", defaultValue = "1") Integer pn, Model model) {
+    public String index(@RequestParam(value = "pn", defaultValue = "1") Integer pn, Model model) {
         Page<Blog> page = new Page<>(pn, LIMIT);
         model.addAttribute("page", blogService.getBlogByPage(page));
         model.addAttribute("types", blogService.getBlogCountByType(LIMIT));
@@ -42,9 +43,17 @@ public class IndexController {
         return "index";
     }
 
+    @PostMapping("/search")
+    public String search(@RequestParam(value = "pn", defaultValue = "1") Integer pn, @RequestParam String query, Model model) {
+        model.addAttribute("page", blogService.getBlogByKeyWord(query, pn, LIMIT));
+        model.addAttribute("query", query);
+        return "search";
+    }
+
     @GetMapping("/blog/{id}")
-    public String blog(@PathVariable("id") Long id) {
-        return "blog";
+    public String blog(@PathVariable("id") Long id, Model model) {
+        model.addAttribute("page", blogService.getById(id));
+        return null;
     }
 
     @GetMapping("/about")

@@ -21,4 +21,7 @@ public interface BlogMapper extends BaseMapper<Blog> {
 
     @Select("select * from t_blog where recommend = true order by update_time desc limit #{limit}")
     List<Blog> getBlogByRecommend(Integer limit);
+
+    @Select("select * from t_blog where content like #{query} or title like #{query}")
+    List<Blog> search(@Param("query") String query);
 }

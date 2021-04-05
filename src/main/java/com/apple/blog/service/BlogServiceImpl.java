@@ -26,6 +26,18 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, Blog> implements Bl
     private final static String TYPE_COUNT = "count";
     private final static String TYPE_NAME = "name";
     private final static String TAG_NAME = "name";
+    private final static String TITLE = "title";
+    private final static String CONTENT = "content";
+    private final static String PUBLISHED = "published";
+    private final static String DESCRIPTION = "description";
+    private final static String VIEWS = "views";
+    // 分页相关
+    public final static String TOTAL = "total";
+    public final static String TOTAL_PAGE = "totalPage";
+    public final static String CURRENT_PAGE = "currentPage";
+    public final static String BLOG_LIST = "blogList";
+    public final static String PAGE_SIZE = "pageSize";
+    private final static Boolean PUBLISHE = true;
     private final static String FILE_SEGMENTATION = ",";
     @Autowired
     private BlogMapper blogMapper;
@@ -93,13 +105,13 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, Blog> implements Bl
         Page blogPage = blogService.page(page);
         List<Blog> blogList = blogPage.getRecords();
         // 对user进行赋值
-        blogList = blogService.setUserByBlogList(blogList);
+        blogList = blogService.setUserAndTagAndTypeWithBlog(blogList);
         blogPage.setRecords(blogList);
         return blogPage;
     }
 
     @Override
-    public List<Blog> setUserByBlogList(List<Blog> blogList) {
+    public List<Blog> setUserAndTagAndTypeWithBlog(List<Blog> blogList) {
         blogList.stream().forEach(blog -> {
             User blogUser = new User();
             Type blogType = new Type();
@@ -148,6 +160,23 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, Blog> implements Bl
                 blogTagService.updateById(blogTag);
             });
         }
+    }
+
+    @Override
+    public Page<Blog> getBlogByKeyWord(String query, Integer pn, Integer size) {
+        QueryWrapper<Blog> queryWrapper = new QueryWrapper<>();
+        queryWrapper.and(wrapper -> {
+            wrapper.like(TITLE, query).or().like(DESCRIPTION, query);
+        });
+        queryWrapper.eq(PUBLISHED, PUBLISHE);
+        queryWrapper.select(Blog.class, i -> !i.getProperty().equals(CONTENT));
+        queryWrapper.orderByDesc(VIEWS);
+        Page<Blog> page = new Page<Blog>(pn, size);
+        Page<Blog> blogPage = blogService.page(page, queryWrapper);
+        List<Blog> blogList = blogPage.getRecords();
+        blogList = blogService.setUserAndTagAndTypeWithBlog(blogList);
+        blogPage.setRecords(blogList);
+        return blogPage;
     }
 
     private List<Long> changeStringToLongList(String str, String code) {
