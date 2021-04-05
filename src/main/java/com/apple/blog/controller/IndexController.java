@@ -10,6 +10,7 @@ import com.apple.blog.exception.NotfoundException;
 import com.apple.blog.service.BlogService;
 import com.apple.blog.service.BlogTagService;
 import com.apple.blog.service.TypeService;
+import com.apple.blog.utils.MarkDownUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -61,7 +62,10 @@ public class IndexController {
             throw new NotfoundException("无该博客");
         }
         List<Blog> blogList = blogService.setUserAndTagAndTypeWithBlog(Collections.singletonList(blog));
-        model.addAttribute("blog", blogList.get(0));
+        blog = blogList.get(0);
+        String HTMLContent = MarkDownUtils.markdownToHtmlExtensitons(blog.getContent());//MarkDown文本转成HTML文本
+        blog.setContent(HTMLContent);
+        model.addAttribute("blog", blog);
         return "blog";
     }
 
