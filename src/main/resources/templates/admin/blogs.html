@@ -118,7 +118,7 @@
                 <tr>
                     <th colspan="7">
                         <div class=" ui pagination mini menu" th:if="${page.total}>${page.size}">
-                            <button onclick="page(this)" th:attr="data-page=${page.current}-1" th:if="${page.current}>0"
+                            <button onclick="page(this)" th:attr="data-page=${page.current}-1" th:if="${page.hasPrevious()}
                                     class=" item">上一页
                             </button>
                             <button onclick="page(this)" th:attr="data-page=${page.current}+1"

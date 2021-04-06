@@ -44,11 +44,10 @@ public class BlogController {
         // 根据blogId，拼接标题和是否推荐字段，查询符合条件的博客Blog
         // 根据typeId查询类型表中的Type
         int size = 5;
-        List<Blog> blogList = blogService.getBlogByBlogQuery(blogQuery);
-        ArrayList<BlogTypeVO> blogTypeVOList = getBlogTypeVOList(blogList);
-        Map<Integer, Object> map = getPages(pn, size, blogTypeVOList);
-        model.addAttribute("page", map.get(0));
-        model.addAttribute("maxPage", map.get(1));
+        Page<Blog> blogPage = blogService.getBlogByBlogQuery(blogQuery,pn,size);
+        List<Blog> blogList = blogPage.getRecords();
+        blogList = blogService.setUserAndTagAndTypeWithBlog(blogList);
+        blogPage.setRecords(blogList);
         return "admin/blogs::blogList";
     }
 
@@ -62,11 +61,12 @@ public class BlogController {
         // for循环上一步得到的blogIdList，找出对应的typeId，根据typeId查询type表找到type信息,创建blogTypeVO
         // 把blogTypeVo集合转换为page类型
         int size = 5;
-        List<Blog> blogList = blogService.list();
-        ArrayList<BlogTypeVO> blogTypeVOList = getBlogTypeVOList(blogList);
-        Map<Integer, Object> map = getPages(pn, size, blogTypeVOList);
-        model.addAttribute("page", map.get(0));
-        model.addAttribute("maxPage", map.get(1));
+        Page<Blog> page = new Page<>(pn,size);
+        Page<Blog> blogPage = blogService.page(page);
+        List<Blog> blogList = blogPage.getRecords();
+        blogList = blogService.setUserAndTagAndTypeWithBlog(blogList);
+        blogPage.setRecords(blogList);
+        model.addAttribute("page",blogPage);
         List<Type> typeList = typeService.list();
         model.addAttribute("typeList", typeList);
         List<Tag> tagList = tagService.list();

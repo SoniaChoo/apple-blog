@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Map;
 
 public interface BlogService extends IService<Blog> {
-    List<Blog> getBlogByBlogQuery(BlogQuery blogQuery);
+    Page<Blog> getBlogByBlogQuery(BlogQuery blogQuery,Integer pn,Integer size);
 
     List<Map<String, Object>> getBlogCountByType(Integer limit);
 

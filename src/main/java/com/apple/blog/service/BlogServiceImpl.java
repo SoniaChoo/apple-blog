@@ -57,7 +57,7 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, Blog> implements Bl
     private BlogTagService blogTagService;
 
     @Override
-    public List<Blog> getBlogByBlogQuery(BlogQuery blogQuery) {
+    public Page<Blog> getBlogByBlogQuery(BlogQuery blogQuery, Integer pn, Integer size) {
         QueryWrapper<Blog> queryWrapper = new QueryWrapper<>();
         if (blogQuery.getTypeId() != null) {
             queryWrapper.eq("type_id", blogQuery.getTypeId());
@@ -68,8 +68,8 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, Blog> implements Bl
         if (blogQuery.getRecommend() != null) {
             queryWrapper.eq("recommend", blogQuery.getRecommend());
         }
-        List<Blog> blogList = blogMapper.selectList(queryWrapper);
-        return blogList;
+        Page<Blog> page = new Page<>(pn, size);
+        return blogService.page(page, queryWrapper);
     }
 
     @Override
