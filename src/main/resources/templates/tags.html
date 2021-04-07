@@ -41,268 +41,45 @@
                         <h3 class="ui teal header">标签</h3>
                     </div>
                     <div class="ui right aligned column">
-                        共<h3 class="ui orange header m-inline-block m-text-thin">12</h3>个
+                        共<h3 class="ui orange header m-inline-block m-text-thin" th:text="${#arrays.length(tags)}">12</h3>个
                     </div>
                 </div>
             </div>
             <!--                分类内容-->
             <div class="ui attached segment m-padded-tb-large">
-                <a href="#" target="_blank" class="ui teal  left pointing basic  larger label m-margin-tb-tiny">思想与感悟
-                <div class="detail">23</div></a>
-                <a href="#" target="_blank" class="ui   left pointing basic  larger label m-margin-tb-tiny">思想与感悟
-                    <div class="detail">23</div></a>
-                <a href="#" target="_blank" class="ui   left pointing basic  larger label m-margin-tb-tiny">思想与感悟
-                    <div class="detail">23</div></a>
-                <a href="#" target="_blank" class="ui   left pointing basic  larger label m-margin-tb-tiny">思想与感悟
-                    <div class="detail">23</div></a>
-                <a href="#" target="_blank" class="ui   left pointing basic  larger label m-margin-tb-tiny">思想与感悟
-                    <div class="detail">23</div></a>
-                <a href="#" target="_blank" class="ui   left pointing basic  larger label m-margin-tb-tiny">思想与感悟
-                    <div class="detail">23</div></a>
-                <a href="#" target="_blank" class="ui   left pointing basic  larger label m-margin-tb-tiny">思想与感悟
-                    <div class="detail">23</div></a>
-                <a href="#" target="_blank" class="ui   left pointing basic  larger label m-margin-tb-tiny">思想与感悟
-                    <div class="detail">23</div></a>
-                <a href="#" target="_blank" class="ui   left pointing basic  larger label m-margin-tb-tiny">思想与感悟
-                    <div class="detail">23</div></a>
-                <a href="#" target="_blank" class="ui   left pointing basic  larger label m-margin-tb-tiny">思想与感悟
-                    <div class="detail">23</div></a>
+                <a href="#" th:href="@{/tags/{id}(id=${tag['tag_id']})}" class="ui  left pointing basic  larger label m-margin-tb-tiny" th:classappend="${tag['tag_id']==activeTagId}? 'teal'" th:each="tag:${tags}"><span th:text="${tag['name']}">思想与感悟</span>
+                <div class="detail" th:text="${tag['count']}">23</div></a>
             </div>
             <!-- content文章-->
             <div class="ui teal top attached segment">
-                <div class="ui padded vertical segment m-padded-tb-large m-padded-lr-responsive">
+                <div class="ui padded vertical segment m-padded-tb-large m-padded-lr-responsive" th:each="blog:${page.getRecords()}">
                     <div class="ui mobile reversed stackable grid">
                         <div class="eleven wide column">
-                            <h3 class="ui header">你真的会java嘛</h3>
-                            <p class="ui m-text">java的内容包括数据库，spring，java有非常多的框架，需要花很多时间和精力来学习，希望大家都能学好java</p>
+                            <h3 class="ui header" th:text="${blog.title}">你真的会java嘛</h3>
+                            <p class="ui m-text" th:text="${blog.description}">java的内容包括数据库，spring，java有非常多的框架，需要花很多时间和精力来学习，希望大家都能学好java</p>
                             <div class="ui stackable grid">
                                 <div class="row">
                                     <div class="eleven wide column">
                                         <div class="ui mini horizontal link list">
                                             <div class="item">
-                                                <img src="https://picsum.photos/100/100/?blur=2" alt="" class="ui avatar image">
-                                                <div class="content"><a href="#" class="header">ZhuZhu</a></div>
+                                                <img src="https://picsum.photos/100/100/?blur=2" th:src="@{${blog.user.avatar}}" alt="" class="ui avatar image">
+                                                <div class="content"><a href="#" class="header" th:text="${blog.user.nickname}">ZhuZhu</a></div>
                                             </div>
                                             <div class="item">
-                                                <i class="calendar icon"></i>2021-02-07
+                                                <i class="calendar icon"></i><span th:text="${#dates.format(blog.updateTime,'yyyy-MM-dd')}">2021-02-07</span>
                                             </div>
                                             <div class="item">
-                                                <i class="eye icon"></i>666
+                                                <i class="eye icon"></i><span th:text="${blog.views}">666</span>
                                             </div>
                                         </div>
                                     </div>
                                     <div class="right aligned five wide column">
-                                        <a href="#" class="ui teal basic label icon m-padded-tiny m-text-thin">自我认知</a>
+                                        <a href="#" class="ui teal basic label icon m-padded-tiny m-text-thin" th:text="${blog.type.name}">自我认知</a>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="column">
-                                        <a href="#" target="_blank" class="ui basic teal mini m-text-thin m-padded-mini label left pointing">
-                                            认知与感悟
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="five wide column">
-                            <a href="#" target="_blank">
-                                <img src="https://picsum.photos/800/450/?blur=2" alt="" class="ui rounded image">
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="ui padded vertical segment m-padded-tb-large m-padded-lr-responsive">
-                    <div class="ui mobile reversed stackable grid">
-                        <div class="eleven wide column">
-                            <h3 class="ui header">你真的会java嘛</h3>
-                            <p class="ui m-text">java的内容包括数据库，spring，java有非常多的框架，需要花很多时间和精力来学习，希望大家都能学好java</p>
-                            <div class="ui stackable grid">
-                                <div class="row">
-                                    <div class="eleven wide column">
-                                        <div class="ui mini horizontal link list">
-                                            <div class="item">
-                                                <img src="https://picsum.photos/100/100/?blur=2" alt="" class="ui avatar image">
-                                                <div class="content"><a href="#" class="header">ZhuZhu</a></div>
-                                            </div>
-                                            <div class="item">
-                                                <i class="calendar icon"></i>2021-02-07
-                                            </div>
-                                            <div class="item">
-                                                <i class="eye icon"></i>666
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="right aligned five wide column">
-                                        <a href="#" class="ui teal basic label icon m-padded-tiny m-text-thin">自我认知</a>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="column">
-                                        <a href="#" target="_blank" class="ui basic teal mini m-text-thin m-padded-mini label left pointing">
-                                            认知与感悟
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="five wide column">
-                            <a href="#" target="_blank">
-                                <img src="https://picsum.photos/800/450/?blur=2" alt="" class="ui rounded image">
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="ui padded vertical segment m-padded-tb-large m-padded-lr-responsive">
-                    <div class="ui mobile reversed stackable grid">
-                        <div class="eleven wide column">
-                            <h3 class="ui header">你真的会java嘛</h3>
-                            <p class="ui m-text">java的内容包括数据库，spring，java有非常多的框架，需要花很多时间和精力来学习，希望大家都能学好java</p>
-                            <div class="ui stackable grid">
-                                <div class="row">
-                                    <div class="eleven wide column">
-                                        <div class="ui mini horizontal link list">
-                                            <div class="item">
-                                                <img src="https://picsum.photos/100/100/?blur=2" alt="" class="ui avatar image">
-                                                <div class="content"><a href="#" class="header">ZhuZhu</a></div>
-                                            </div>
-                                            <div class="item">
-                                                <i class="calendar icon"></i>2021-02-07
-                                            </div>
-                                            <div class="item">
-                                                <i class="eye icon"></i>666
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="right aligned five wide column">
-                                        <a href="#" class="ui teal basic label icon m-padded-tiny m-text-thin">自我认知</a>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="column">
-                                        <a href="#" target="_blank" class="ui basic teal mini m-text-thin m-padded-mini label left pointing">
-                                            认知与感悟
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="five wide column">
-                            <a href="#" target="_blank">
-                                <img src="https://picsum.photos/800/450/?blur=2" alt="" class="ui rounded image">
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="ui padded vertical segment m-padded-tb-large m-padded-lr-responsive">
-                    <div class="ui mobile reversed stackable grid">
-                        <div class="eleven wide column">
-                            <h3 class="ui header">你真的会java嘛</h3>
-                            <p class="ui m-text">java的内容包括数据库，spring，java有非常多的框架，需要花很多时间和精力来学习，希望大家都能学好java</p>
-                            <div class="ui stackable grid">
-                                <div class="row">
-                                    <div class="eleven wide column">
-                                        <div class="ui mini horizontal link list">
-                                            <div class="item">
-                                                <img src="https://picsum.photos/100/100/?blur=2" alt="" class="ui avatar image">
-                                                <div class="content"><a href="#" class="header">ZhuZhu</a></div>
-                                            </div>
-                                            <div class="item">
-                                                <i class="calendar icon"></i>2021-02-07
-                                            </div>
-                                            <div class="item">
-                                                <i class="eye icon"></i>666
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="right aligned five wide column">
-                                        <a href="#" class="ui teal basic label icon m-padded-tiny m-text-thin">自我认知</a>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="column">
-                                        <a href="#" target="_blank" class="ui basic teal mini m-text-thin m-padded-mini label left pointing">
-                                            认知与感悟
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="five wide column">
-                            <a href="#" target="_blank">
-                                <img src="https://picsum.photos/800/450/?blur=2" alt="" class="ui rounded image">
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="ui padded vertical segment m-padded-tb-large m-padded-lr-responsive">
-                    <div class="ui mobile reversed stackable grid">
-                        <div class="eleven wide column">
-                            <h3 class="ui header">你真的会java嘛</h3>
-                            <p class="ui m-text">java的内容包括数据库，spring，java有非常多的框架，需要花很多时间和精力来学习，希望大家都能学好java</p>
-                            <div class="ui stackable grid">
-                                <div class="row">
-                                    <div class="eleven wide column">
-                                        <div class="ui mini horizontal link list">
-                                            <div class="item">
-                                                <img src="https://picsum.photos/100/100/?blur=2" alt="" class="ui avatar image">
-                                                <div class="content"><a href="#" class="header">ZhuZhu</a></div>
-                                            </div>
-                                            <div class="item">
-                                                <i class="calendar icon"></i>2021-02-07
-                                            </div>
-                                            <div class="item">
-                                                <i class="eye icon"></i>666
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="right aligned five wide column">
-                                        <a href="#" class="ui teal basic label icon m-padded-tiny m-text-thin">自我认知</a>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="column">
-                                        <a href="#" target="_blank" class="ui basic teal mini m-text-thin m-padded-mini label left pointing">
-                                            认知与感悟
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="five wide column">
-                            <a href="#" target="_blank">
-                                <img src="https://picsum.photos/800/450/?blur=2" alt="" class="ui rounded image">
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <div class="ui padded vertical segment m-padded-tb-large m-padded-lr-responsive">
-                    <div class="ui mobile reversed stackable grid">
-                        <div class="eleven wide column">
-                            <h3 class="ui header">你真的会java嘛</h3>
-                            <p class="ui m-text">java的内容包括数据库，spring，java有非常多的框架，需要花很多时间和精力来学习，希望大家都能学好java</p>
-                            <div class="ui stackable grid">
-                                <div class="row">
-                                    <div class="eleven wide column">
-                                        <div class="ui mini horizontal link list">
-                                            <div class="item">
-                                                <img src="https://picsum.photos/100/100/?blur=2" alt="" class="ui avatar image">
-                                                <div class="content"><a href="#" class="header">ZhuZhu</a></div>
-                                            </div>
-                                            <div class="item">
-                                                <i class="calendar icon"></i>2021-02-07
-                                            </div>
-                                            <div class="item">
-                                                <i class="eye icon"></i>666
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="right aligned five wide column">
-                                        <a href="#" class="ui teal basic label icon m-padded-tiny m-text-thin">自我认知</a>
-                                    </div>
-                                </div>
-                                <div class="row">
-                                    <div class="column">
-                                        <a href="#" target="_blank" class="ui basic teal mini m-text-thin m-padded-mini label left pointing">
+                                        <a href="#" th:href="@{/tags/{id}(id=${tag.id})}" target="_blank" class="ui basic mini m-text-thin m-padded-mini label left pointing" th:classappend="${tag.id==activeTagId}? 'teal'" th:each="tag:${blog.tagList}" th:text="${tag.name}">
                                             认知与感悟
                                         </a>
                                     </div>
@@ -318,13 +95,15 @@
                 </div>
             </div>
             <!--底部bottom-->
-            <div class="ui attached segment">
+            <div class="ui bottom attached segment" th:if="${page.total}>${page.size}">
                 <div class="ui two column grid">
                     <div class="ui column">
-                        <a href="#" class="ui rounded basic teal mini button">上一页</a>
+                        <a href="#" th:href="@{/(pn=${page.current}-1)}" th:if="${page.hasPrevious()}"
+                           class="ui rounded basic teal mini button">上一页</a>
                     </div>
                     <div class="ui right aligned column">
-                        <a href="#" class="ui rounded basic teal mini button">下一页</a>
+                        <a href="#" th:href="@{/(pn=${page.current}+1)}" th:if="${page.hasNext()}"
+                           class="ui rounded basic teal mini button">下一页</a>
                     </div>
                 </div>
             </div>

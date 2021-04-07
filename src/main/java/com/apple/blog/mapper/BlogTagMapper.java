@@ -13,4 +13,7 @@ import java.util.Map;
 public interface BlogTagMapper extends BaseMapper<BlogTag> {
     @Select("select tag_id,count(tag_id) as count from t_blog_tag group by tag_id order by count desc limit #{limit}")
     List<Map<String, Object>> getBlogCountByTag(@Param("limit") Integer limit);
+
+    @Select("select blog_id from t_blog_tag where tag_id = #{tag_id}")
+    List<Long> getBlogIdByTagId(@Param("tag_id") Long tagId);
 }

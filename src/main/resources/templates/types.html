@@ -48,7 +48,7 @@
             <!--                分类内容-->
             <div class="ui attached segment m-padded-tb-large">
                 <div class="ui labeled button m-margin-bottom-small" th:each="type:${types}">
-                    <div th:href="@{/types/{id}(id=${type['type_id']})}" class="ui basic button " th:classappend="${type['type_id']==activeTypeId}? 'teal'" th:text="${type['name']}">思想与感悟</div>
+                    <a th:href="@{/types/{id}(id=${type['type_id']})}" class="ui basic button " th:classappend="${type['type_id']==activeTypeId}? 'teal'" th:text="${type['name']}">思想与感悟</a>
                     <div class="ui basic left pointing label" th:classappend="${type['type_id']==activeTypeId}? 'teal'" th:text="${type['count']}">66</div>
                 </div>
             </div>
