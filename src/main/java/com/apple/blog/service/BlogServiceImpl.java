@@ -11,6 +11,7 @@ import com.apple.blog.mapper.BlogMapper;
 import com.apple.blog.mapper.TagMapper;
 import com.apple.blog.mapper.TypeMapper;
 import com.apple.blog.vo.BlogQuery;
+import com.baomidou.mybatisplus.core.conditions.query.Query;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
@@ -31,13 +32,13 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, Blog> implements Bl
     private final static String PUBLISHED = "published";
     private final static String DESCRIPTION = "description";
     private final static String VIEWS = "views";
+    private final static Boolean PUBLISH = true;
     // 分页相关
     public final static String TOTAL = "total";
     public final static String TOTAL_PAGE = "totalPage";
     public final static String CURRENT_PAGE = "currentPage";
     public final static String BLOG_LIST = "blogList";
     public final static String PAGE_SIZE = "pageSize";
-    private final static Boolean PUBLISHE = true;
     private final static String FILE_SEGMENTATION = ",";
     @Autowired
     private BlogMapper blogMapper;
@@ -168,7 +169,7 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, Blog> implements Bl
         queryWrapper.and(wrapper -> {
             wrapper.like(TITLE, query).or().like(DESCRIPTION, query);
         });
-        queryWrapper.eq(PUBLISHED, PUBLISHE);
+        queryWrapper.eq(PUBLISHED, PUBLISH);
         queryWrapper.select(Blog.class, i -> !i.getProperty().equals(CONTENT));
         queryWrapper.orderByDesc(VIEWS);
         Page<Blog> page = new Page<Blog>(pn, size);
@@ -177,6 +178,24 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, Blog> implements Bl
         blogList = blogService.setUserAndTagAndTypeWithBlog(blogList);
         blogPage.setRecords(blogList);
         return blogPage;
+    }
+
+    @Override
+    public Map<String, List<Blog>> archiveBlog() {
+        List<String> yearList = blogMapper.getGroupYear();
+        HashMap<String, List<Blog>> map = new HashMap<>();
+        yearList.stream().forEachOrdered(year->{
+            List<Blog> blogList = blogMapper.getBlogByYear(year);
+            map.put(year,blogList);
+        });
+        return map;
+    }
+
+    @Override
+    public Integer countBlog() {
+        QueryWrapper<Blog> queryWrapper = new QueryWrapper<>();
+        queryWrapper.eq(PUBLISHED, PUBLISH);
+        return blogMapper.selectCount(queryWrapper);
     }
 
     private List<Long> changeStringToLongList(String str, String code) {

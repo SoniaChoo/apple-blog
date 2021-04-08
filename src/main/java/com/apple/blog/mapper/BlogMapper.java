@@ -24,4 +24,10 @@ public interface BlogMapper extends BaseMapper<Blog> {
 
     @Select("select * from t_blog where content like #{query} or title like #{query}")
     List<Blog> search(@Param("query") String query);
+
+    @Select("select date_format(b.update_time,'%Y') as year from t_blog b group by year order by year desc")
+    List<String> getGroupYear();
+
+    @Select("select * from t_blog b where date_format(b.update_time,'%Y') = #{year}")
+    List<Blog> getBlogByYear(@Param("year") String year);
 }

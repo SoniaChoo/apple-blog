@@ -74,11 +74,6 @@ public class IndexController {
         return "about";
     }
 
-    @GetMapping("/archives")
-    public String archives() {
-        return "archives";
-    }
-
     @GetMapping("/tags")
     public String tags() {
         return "tags";

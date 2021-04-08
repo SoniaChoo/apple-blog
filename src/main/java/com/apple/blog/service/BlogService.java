@@ -31,4 +31,8 @@ public interface BlogService extends IService<Blog> {
     void updateBlogTag(Blog blog);
 
     Page<Blog> getBlogByKeyWord(String query, Integer pn, Integer size);
+
+    Map<String, List<Blog>> archiveBlog();
+
+    Integer countBlog();
 }
