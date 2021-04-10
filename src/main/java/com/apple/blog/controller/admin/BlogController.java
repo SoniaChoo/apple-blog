@@ -111,8 +111,9 @@ public class BlogController {
     @GetMapping("/{id}/toEditBlogPage")
     public String toEditBlogPage(@PathVariable("id") Long id, Model model) {
         Blog blog = blogService.getById(id);
-        BlogTypeVO blogTypeVO = getBlogTypeVOList(Collections.singletonList(blog)).get(0);
-        model.addAttribute("blog", blogTypeVO);
+        List<Blog> blogList = blogService.setUserAndTagAndTypeWithBlog(Collections.singletonList(blog));
+//        BlogTypeVO blogTypeVO = getBlogTypeVOList(Collections.singletonList(blog)).get(0);
+        model.addAttribute("blog", blogList.get(0));
         model.addAttribute("typeList", typeService.list());
         // TODO 把标签的功能加上
         model.addAttribute("tagList", tagService.list());
@@ -127,6 +128,19 @@ public class BlogController {
         // 如果修改了标签，就需要更新中间表
         if (!oriBlog.getTagsId().equals(blog.getTagsId())) {
             blogService.updateBlogTag(blog);
+        }
+        // TODO :改为前端处理
+        if (blog.getAppreciation() == null) {
+            blog.setAppreciation(false);
+        }
+        if (blog.getRecommend() == null) {
+            blog.setRecommend(false);
+        }
+        if (blog.getShareStatement() == null) {
+            blog.setShareStatement(false);
+        }
+        if (blog.getCommentabled() == null) {
+            blog.setCommentabled(false);
         }
         blogService.updateById(blog);
         redirectAttributes.addFlashAttribute("msg", "操作成功");

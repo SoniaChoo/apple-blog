@@ -281,13 +281,13 @@
                                 <i class="idea icon"></i>分类
                             </div>
                             <div class="right aligned column">
-                                <a href="#" th:href="@{/types/-1}" target="_blank">more<i class="angle double right icon"></i></a>
+                                <a href="#" th:href="@{/types/-1}" target="_parent">more<i class="angle double right icon"></i></a>
                             </div>
                         </div>
                     </div>
                     <div class="ui teal segment">
                         <div class="ui fluid vertical menu">
-                            <a href="#" target="_blank" class="item" th:each="type:${types}">
+                            <a href="#" th:href="@{/types/{id}(id=${type['type_id']})}" target="_blank" class="item" th:each="type:${types}">
                                 <span th:text="${type['name']}"></span>学习日志
                                 <!--item自动有一个这样的效果，文字后面的东西居右-->
                                 <div class="ui teal left pointing basic label" th:text="${type['count']}">13</div>
@@ -325,7 +325,7 @@
                         </div>
                     </div>
                     <div class="ui teal segment">
-                        <a href="#" target="_blank" class="ui teal basic left pointing label m-margin-tb-tiny"
+                        <a href="#" th:href="@{/tags/{id}(id=${tag['tag_id']})}" target="_blank" class="ui teal basic left pointing label m-margin-tb-tiny"
                            th:each="tag:${tags}">
                             <span th:text="${tag['name']}">java</span>
                             <div class="detail" th:text="${tag['count']}">12</div>

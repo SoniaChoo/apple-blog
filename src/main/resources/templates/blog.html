@@ -444,28 +444,30 @@ h5,h6{font-size:1em;}
             <div class="m-padded-lr-responsive ">
                 <div class="ui label teal left pointing basic" th:each="tag:${blog.tagList}" th:text="${tag.name}">html</div>
             </div>
-<!--            赞赏-->
-            <div id="payButton" class="ui basic center aligned segment">
-                <div class="ui button orange circular basic">赞赏</div>
-            </div>
-<!--            二维码-->
-            <div class="ui flowing popup transition hidden">
-                <div class="ui payQR orange basic label">
-                    <div class="ui images">
-                        <div class="ui image" style="font-size:inherit !important">
-                            <img src="../static/images/wechat.jpg" alt="" th:src="@{/images/wechat.jpg}" class="ui rounded bordered image" style="width: 120px">
-                            <h4 class="center aligned">支付宝</h4>
-                        </div>
-                        <div class="ui image">
-                            <img src="../static/images/wechat.jpg" alt="" th:src="@{/images/wechat.jpg}" class="ui rounded bordered image" style="width: 120px">
-                            <h4>微信</h4>
+            <div th:if="${blog.appreciation}">
+                <!--            赞赏-->
+                <div id="payButton" class="ui basic center aligned segment">
+                    <div class="ui button orange circular basic">赞赏</div>
+                </div>
+                <!--            二维码-->
+                <div class="ui flowing popup transition hidden">
+                    <div class="ui payQR orange basic label">
+                        <div class="ui images">
+                            <div class="ui image" style="font-size:inherit !important">
+                                <img src="../static/images/wechat.jpg" alt="" th:src="@{/images/wechat.jpg}" class="ui rounded bordered image" style="width: 120px">
+                                <h4 class="center aligned">支付宝</h4>
+                            </div>
+                            <div class="ui image">
+                                <img src="../static/images/wechat.jpg" alt="" th:src="@{/images/wechat.jpg}" class="ui rounded bordered image" style="width: 120px">
+                                <h4>微信</h4>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
 <!--      博客信息  -->
-        <div class="ui attached positive message">
+        <div class="ui attached positive message" th:if="${blog.shareStatement}">
             <div class="ui middle aligned grid padded">
                 <div class="ui eleven wide column">
                     <ui class="list">
@@ -481,7 +483,7 @@ h5,h6{font-size:1em;}
             </div>
         </div>
 <!--        留言区域-->
-        <div class="ui bottom attached segment">
+        <div class="ui bottom attached segment" th:if="${blog.commentabled}">
 <!--            留言区域列表-->
             <div class="ui teal segment">
                 <div id="comment" class="ui comments">
@@ -684,9 +686,10 @@ h5,h6{font-size:1em;}
         position:'left center',
         on:'click'
     });
-
+    var serurl = /*[[#{blog.serurl}]]*/"127.0.0.1:80";
+    var url = /*[[@{/blog/{id}(id=${blog.id})]]*/"";
     var qrcode = new QRCode("qrcode", {
-        text: "http://www.runoob.com",
+        text: serurl+url,
         width: 100,
         height: 100,
         colorDark : "#000000",

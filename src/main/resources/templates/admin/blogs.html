@@ -103,7 +103,7 @@
                 <tr th:each="blog,stat:${page.records}">
                     <td th:text="${stat.count}">1</td>
                     <td th:text="${blog.title}">用户故事</td>
-                    <td th:text="${blog.typeName}">学习日志</td>
+                    <td th:text="${blog.type.name}">学习日志</td>
                     <td th:text="${blog.recommend}?'是':'否'">是</td>
                     <td th:text="${blog.published}?'发布':'草稿'">发布</td>
                     <td th:text="${#dates.format(blog.updateTime,'yyyy-MM-dd')}">2021-01-5 08:00:00</td>
@@ -118,11 +118,11 @@
                 <tr>
                     <th colspan="7">
                         <div class=" ui pagination mini menu" th:if="${page.total}>${page.size}">
-                            <button onclick="page(this)" th:attr="data-page=${page.current}-1" th:if="${page.hasPrevious()}
-                                    class=" item">上一页
+                            <button onclick="page(this)" th:attr="data-page=${page.current}-1"
+                                    th:if="${page.hasPrevious()}" class="item">上一页
                             </button>
                             <button onclick="page(this)" th:attr="data-page=${page.current}+1"
-                                    th:if="${page.current} < ${maxPage}" class="item">下一页
+                                    th:if="${page.hasNext()}" class="item">下一页
                             </button>
                         </div>
                         <a th:href="@{/admin/toAddBlogPage}" class="ui teal basic right floated  mini button">新增</a>

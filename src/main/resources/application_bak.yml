@@ -9,8 +9,9 @@ spring:
     hiddenmethod:
       filter:
         enabled: true
+  messages:
+    basename: i18n/messages
 mybatis-plus:
   mapper-locations: classpath:/mapper/**.xml
-
 server:
   port: 8080
