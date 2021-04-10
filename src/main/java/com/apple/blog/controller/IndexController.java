@@ -69,9 +69,10 @@ public class IndexController {
         return "blog";
     }
 
-    @GetMapping("/about")
-    public String about() {
-        return "about";
+    @GetMapping("/footer/newblog")
+    public String newBlogs(Model model) {
+        model.addAttribute("newBlogs", blogService.getBlogByRecommend(3));
+        return "common::newBlogList";
     }
 
     @GetMapping("/tags")

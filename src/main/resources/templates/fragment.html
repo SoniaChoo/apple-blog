@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width， initial-scale-1.0">
@@ -612,10 +612,12 @@ h5,h6{font-size:1em;}
                 </div>
                 <div class="ui three wide column">
                     <h4 class="ui inverted header m-opacity-mini -thin m-text-spaced">最新博客</h4>
-                    <div class="ui inverted link list">
-                        <a href="#" class="item">用户故事</a>
-                        <a href="#" class="item">用户故事</a>
-                        <a href="#" class="item">用户故事</a>
+                    <div id="newblog-container">
+                        <div class="ui inverted link list" th:fragment="newBlogList">
+                            <a href="#" th:href="@[/blog/{id}(id=${blog.id})}]" target="_blank" a class="item" th:each="blog:${newBlogs}" th:text="${blog.title}">用户故事</a>
+                            <a href="#" class="item">用户故事</a>
+                            <a href="#" class="item">用户故事</a>
+                        </div>
                     </div>
                 </div>
                 <div class="ui five wide column">
@@ -652,6 +654,10 @@ h5,h6{font-size:1em;}
 
 <!--滚动侦听-->
 <script src="../static/lib/waypoints/jquery.waypoints.min.js"></script>
+
+<script>
+    $('#newblog-container').load(/*[[@{/footer/newblog}]]*/"/footer/newblog");
+</script>
 
 <script>
     $('.menu.toggle').click(function (){

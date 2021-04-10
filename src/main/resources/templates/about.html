@@ -44,7 +44,7 @@
                 </div>
                 <div class="ui attached segment">
                     <div class="text m-text">
-                        <p>朱爽君，文科生跨专业学习java，在计0和1的世界中奔跑，希望和大家共同成长</p>
+                        <p>朱爽君，文科生跨专业学习java，在0和1的世界中奔跑，希望和大家共同成长</p>
                     </div>
                 </div>
                 <div class="ui attached segment">
@@ -87,8 +87,8 @@
                 </div>
                 <div class="ui three wide column">
                     <h4 class="ui inverted header m-opacity-mini -thin m-text-spaced">最新博客</h4>
-                    <div class="ui inverted link list">
-                        <a href="#" class="item">用户故事</a>
+                    <div class="ui inverted link list" th:fragment="newBlogList">
+                        <a href="#" th:href="@[/blog/{id}(id=${blog.id})}]" target="_blank" a class="item" th:each="blog:${newBlogs}" th:text="${blog.title}">用户故事</a>
                         <a href="#" class="item">用户故事</a>
                         <a href="#" class="item">用户故事</a>
                     </div>
